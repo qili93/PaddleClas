@@ -5,11 +5,11 @@ ARCHITECTURE:
 pretrained_model: ""
 model_save_dir: "./output/"
 classes_num: 1000
-total_images: 1281167
+total_images: 1
 save_interval: 1
-validate: True
+validate: False
 valid_interval: 1
-epochs: 120
+epochs: 1
 topk: 5
 image_shape: [3, 224, 224]
 
@@ -32,9 +32,9 @@ OPTIMIZER:
         factor: 0.000100
 
 TRAIN:
-    batch_size: 256
-    num_workers: 4
-    file_list: "./dataset/ILSVRC2012/train_list.txt"
+    batch_size: 1
+    num_workers: 0
+    file_list: "./dataset/train_list.txt.1"
     data_dir: "./dataset/ILSVRC2012/"
     shuffle_seed: 0
     transforms:
@@ -42,10 +42,8 @@ TRAIN:
             to_rgb: True
             to_np: False
             channel_first: False
-        - RandCropImage:
+        - CropImage:
             size: 224
-        - RandFlipImage:
-            flip_code: 1
         - NormalizeImage:
             scale: 1./255.
             mean: [0.485, 0.456, 0.406]
@@ -54,8 +52,8 @@ TRAIN:
         - ToCHWImage:
 
 VALID:
-    batch_size: 64
-    num_workers: 4
+    batch_size: 1
+    num_workers: 0
     file_list: "./dataset/ILSVRC2012/val_list.txt"
     data_dir: "./dataset/ILSVRC2012/"
     shuffle_seed: 0

@@ -188,6 +188,8 @@ class CommonDataset(Dataset):
         with open(img_path, 'rb') as f:
             img = f.read()
         return (transform(img, self.ops), int(label))
+        # img =  np.ones((3,224,224), dtype=np.float32)
+        # return (img, 50)
 
     def __len__(self):
         return self.num_samples
@@ -246,7 +248,8 @@ class Reader:
         batch_sampler = DistributedBatchSampler(
             dataset,
             batch_size=batch_size,
-            shuffle=self.shuffle and is_train,
+            # shuffle=self.shuffle and is_train,
+            shuffle=False,
             drop_last=is_train)
         loader = DataLoader(
             dataset,
